@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirby's Europe Trip 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --sand:#fdf6ee;
+  --cream:#fef3e2;
+  --warm:#f5e6d0;
+  --terracotta:#c2592a;
+  --terra-light:#e07a50;
+  --terra-dark:#9a3f1e;
+  --amber:#e8952e;
+  --amber-light:#f5b45a;
+  --sienna:#7c3520;
+  --ink:#2c1a0e;
+  --muted:#8a6a50;
+  --border:#e8d5be;
+}
+
+body{
+  font-family:'Jost',sans-serif;
+  background:var(--sand);
+  color:var(--ink);
+  min-height:100vh;
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(160deg,#7c3520 0%,#c2592a 45%,#e8952e 100%);
+  padding:32px 32px 28px;
+  position:relative;
+  overflow:hidden;
+}
+.header::before{
+  content:'';position:absolute;
+  top:-80px;right:-80px;
+  width:280px;height:280px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.05);
+}
+.header::after{
+  content:'';position:absolute;
+  bottom:-100px;left:30%;
+  width:320px;height:320px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.08);
+}
+.header-inner{position:relative;z-index:1;}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.trip-eyebrow{
+  font-size:11px;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.6);margin-bottom:8px;
+}
+.header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:700;
+  color:white;line-height:1.05;
+  letter-spacing:-0.3px;
+}
+.header h1 em{
+  font-style:italic;
+  color:#fde68a;
+}
+.header-sub{
+  font-size:13px;color:rgba(255,255,255,0.75);
+  margin-top:8px;font-weight:300;
+  letter-spacing:0.02em;
+}
+.countdown{
+  background:rgba(0,0,0,0.2);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:14px;
+  padding:12px 18px;
+  text-align:center;
+  min-width:96px;
+  flex-shrink:0;
+}
+.countdown-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:700;
+  color:#fde68a;line-height:1;
+}
+.countdown-lbl{
+  font-size:10px;color:rgba(255,255,255,0.6);
+  margin-top:3px;letter-spacing:0.12em;
+  text-transform:uppercase;
+}
+
+/* Route pills */
+.route-row{
+  display:flex;align-items:center;
+  gap:6px;flex-wrap:wrap;
+  margin-top:14px;
+}
+.r-city{
+  font-size:12px;font-weight:500;
+  color:rgba(255,255,255,0.9);
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  padding:4px 12px;border-radius:20px;
+}
+.r-arr{font-size:11px;color:rgba(255,255,255,0.35);}
+
+/* NAV */
+.nav{
+  background:white;
+  border-bottom:1px solid var(--border);
+  padding:0 28px;
+  display:flex;gap:0;
+  overflow-x:auto;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 12px rgba(194,89,42,0.08);
+}
+.nav-btn{
+  font-family:'Jost',sans-serif;
+  font-size:13px;font-weight:500;
+  padding:13px 15px;
+  cursor:pointer;
+  border:none;background:none;
+  border-bottom:3px solid transparent;
+  color:var(--muted);
+  white-space:nowrap;
+  transition:all .2s;
+  letter-spacing:0.01em;
+}
+.nav-btn:hover{color:var(--terracotta);}
+.nav-btn.active{
+  color:var(--terracotta);
+  border-bottom-color:var(--terracotta);
+}
+
+/* CONTENT */
+.content{
+  padding:28px 28px;
+  max-width:920px;
+  margin:0 auto;
+}
+
+.panel{display:none;}
+.panel.active{
+  display:block;
+  animation:fadeUp .25s ease;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* CITY HERO */
+.city-hero{
+  border-radius:20px;
+  padding:36px 32px;
+  margin-bottom:22px;
+  position:relative;
+  overflow:hidden;
+  color:white;
+}
+.city-hero::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.12);
+}
+.city-hero-inner{position:relative;z-index:1;}
+.city-emoji{
+  font-size:48px;
+  display:block;
+  margin-bottom:12px;
+  animation:sway 4s ease-in-out infinite;
+}
+@keyframes sway{
+  0%,100%{transform:rotate(-3deg);}
+  50%{transform:rotate(3deg);}
+}
+.city-hero h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:40px;font-weight:700;
+  line-height:1;margin-bottom:6px;
+  letter-spacing:-0.5px;
+}
+.city-hero p{
+  font-size:14px;
+  opacity:0.85;font-weight:300;
+}
+.days-pill{
+  display:inline-block;
+  background:rgba(255,255,255,0.18);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:20px;
+  padding:5px 14px;
+  font-size:12px;font-weight:600;
+  margin-top:12px;
+  letter-spacing:0.03em;
+}
+
+/* City gradients */
+.grad-london   {background:linear-gradient(135deg,#1a3a5c,#2a6496,#3d8bc4);}
+.grad-lisbon   {background:linear-gradient(135deg,#7c3520,#c2592a,#e07a50);}
+.grad-brussels {background:linear-gradient(135deg,#1a4a2e,#2d7a4e,#4aab74);}
+.grad-paris    {background:linear-gradient(135deg,#5c1a3a,#962a6a,#c44a96);}
+.grad-copenhagen{background:linear-gradient(135deg,#1a3a4a,#2a6a8a,#3a9ab4);}
+.grad-overview {background:linear-gradient(135deg,#7c3520,#c2592a,#e8952e);}
+.grad-flights  {background:linear-gradient(135deg,#2c1a0e,#5c3a20,#8a5a30);}
+.grad-checklist{background:linear-gradient(135deg,#1a3a2c,#2a6a4e,#3a9a70);}
+
+/* CARDS */
+.card{
+  background:white;
+  border-radius:16px;
+  border:1px solid var(--border);
+  padding:22px 24px;
+  margin-bottom:16px;
+  box-shadow:0 2px 16px rgba(194,89,42,0.06);
+}
+.card-title{
+  font-size:10px;font-weight:600;
+  color:var(--terracotta);
+  text-transform:uppercase;
+  letter-spacing:0.15em;
+  margin-bottom:16px;
+}
+
+/* STATS */
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+.stat{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px 14px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(194,89,42,0.06);
+  position:relative;
+  overflow:hidden;
+}
+.stat::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--terracotta),var(--amber));
+}
+.stat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:700;
+  color:var(--terracotta);
+  line-height:1;
+}
+.stat-l{
+  font-size:11px;color:var(--muted);
+  margin-top:4px;font-weight:500;
+  letter-spacing:0.05em;
+}
+
+/* HIGHLIGHT GRID */
+.hgrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:10px;
+}
+.hcard{
+  padding:14px 16px;
+  border-radius:12px;
+  background:var(--cream);
+  border:1px solid var(--border);
+  transition:all .2s;
+  cursor:default;
+}
+.hcard:hover{
+  background:var(--warm);
+  border-color:var(--amber-light);
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(194,89,42,0.12);
+}
+.hcard-icon{
+  font-size:22px;
+  margin-bottom:7px;
+  display:block;
+}
+.hcard h4{
+  font-size:13px;font-weight:600;
+  color:var(--ink);margin-bottom:4px;
+}
+.hcard p{
+  font-size:12px;color:var(--muted);
+  line-height:1.55;
+}
+
+/* INFO ROWS */
+.irow{
+  display:flex;align-items:center;
+  gap:14px;padding:12px 0;
+  border-bottom:1px solid var(--cream);
+}
+.irow:last-child{border-bottom:none;}
+.irow-main{
+  flex:1;font-size:14px;
+  font-weight:500;color:var(--ink);
+}
+.irow-detail{
+  flex:2;font-size:12px;
+  color:var(--muted);
+}
+.irow-val{
+  font-size:13px;font-weight:600;
+  color:var(--terracotta);
+  min-width:100px;text-align:right;
+}
+
+/* TIP BOX */
+.tip{
+  background:linear-gradient(135deg,#fef3e2,#fde8ce);
+  border:1px solid #f5d0a8;
+  border-radius:12px;
+  padding:14px 18px;
+  font-size:13px;color:var(--terra-dark);
+  margin-top:14px;line-height:1.65;
+  font-weight:400;
+}
+.tip::before{
+  content:"☀️  ";
+}
+
+/* HOTEL NOTES */
+.notes-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:12px;
+}
+.notes-field label{
+  display:block;
+  font-size:11px;font-weight:600;
+  color:var(--terracotta);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.notes-field input{
+  width:100%;padding:10px 14px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  font-size:13px;
+  font-family:'Jost',sans-serif;
+  color:var(--ink);
+  background:var(--cream);
+  transition:all .2s;
+}
+.notes-field input:focus{
+  outline:none;
+  border-color:var(--terracotta);
+  background:white;
+  box-shadow:0 0 0 3px rgba(194,89,42,0.08);
+}
+
+/* MAP */
+.map-box{
+  background:var(--cream);
+  border-radius:14px;
+  padding:28px 20px;
+  text-align:center;
+}
+.map-route{
+  display:flex;align-items:center;
+  justify-content:center;
+  gap:6px;flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.map-stop{
+  display:flex;flex-direction:column;
+  align-items:center;gap:5px;
+}
+.map-dot{
+  width:12px;height:12px;
+  border-radius:50%;
+  background:var(--terracotta);
+}
+.map-dot.home{background:#2d7a4e;}
+.map-lbl{
+  font-size:11px;font-weight:600;
+  color:var(--muted);
+}
+.map-dash{
+  width:24px;height:2px;
+  background:var(--amber-light);
+  margin-bottom:17px;
+  border-radius:1px;
+}
+.map-hint{
+  font-size:12px;color:var(--muted);
+}
+
+/* CHECKLIST */
+.clist{list-style:none;}
+.clist li{
+  display:flex;align-items:center;
+  gap:12px;padding:11px 0;
+  border-bottom:1px solid var(--cream);
+  font-size:14px;
+  transition:opacity .2s;
+}
+.clist li:last-child{border-bottom:none;}
+.clist input[type=checkbox]{
+  width:17px;height:17px;
+  accent-color:var(--terracotta);
+  cursor:pointer;flex-shrink:0;
+}
+.clist input:checked+span{
+  color:#c8b09a;
+  text-decoration:line-through;
+}
+
+/* Progress bar */
+.progress-wrap{
+  margin-bottom:20px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 20px;
+}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:var(--muted);
+  margin-bottom:8px;font-weight:500;
+}
+.progress-bar{
+  height:8px;background:var(--warm);
+  border-radius:4px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--terracotta),var(--amber));
+  border-radius:4px;
+  transition:width .4s ease;
+}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .content{padding:14px 16px;}
+  .header{padding:20px 18px 18px;}
+  .header h1{font-size:26px;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .hgrid{grid-template-columns:1fr 1fr;}
+  .notes-grid{grid-template-columns:1fr;}
+  .irow-detail{display:none;}
+  .city-hero{padding:24px 20px;}
+  .city-hero h2{font-size:30px;}
+  .nav{padding:0 12px;}
+  .nav-btn{padding:12px 10px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <div class="trip-eyebrow">Europe Adventure · May 2026</div>
+        <h1>Kirby's<br><em>Grand Tour</em></h1>
+        <div class="header-sub">Vancouver → London → Lisbon → Brussels → Paris → Copenhagen</div>
+      </div>
+      <div class="countdown">
+        <div class="countdown-num" id="days-left">--</div>
+        <div class="countdown-lbl">Days to go</div>
+      </div>
+    </div>
+    <div class="route-row">
+      <span class="r-city">🇬🇧 London</span>
+      <span class="r-arr">→</span>
+      <span class="r-city">🇵🇹 Lisbon</span>
+      <span class="r-arr">→</span>
+      <span class="r-city">🇧🇪 Brussels</span>
+      <span class="r-arr">→</span>
+      <span class="r-city">🇫🇷 Paris</span>
+      <span class="r-arr">→</span>
+      <span class="r-city">🇩🇰 Copenhagen</span>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="show('overview',this)">🗺 Overview</button>
+  <button class="nav-btn" onclick="show('london',this)">🇬🇧 London</button>
+  <button class="nav-btn" onclick="show('lisbon',this)">🇵🇹 Lisbon</button>
+  <button class="nav-btn" onclick="show('brussels',this)">🇧🇪 Brussels</button>
+  <button class="nav-btn" onclick="show('paris',this)">🇫🇷 Paris</button>
+  <button class="nav-btn" onclick="show('copenhagen',this)">🇩🇰 Copenhagen</button>
+  <button class="nav-btn" onclick="show('flights',this)">✈️ Flights</button>
+  <button class="nav-btn" onclick="show('checklist',this)">☑️ Checklist</button>
+</nav>
+
+<div class="content">
+
+  <!-- OVERVIEW -->
+  <div class="panel active" id="panel-overview">
+    <div class="city-hero grad-overview">
+      <div class="city-hero-inner">
+        <span class="city-emoji">🌍</span>
+        <h2>Your Grand Tour</h2>
+        <p>6 cities · Western Europe · May 2026</p>
+        <span class="days-pill">21 days suggested</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">6</div><div class="stat-l">Cities</div></div>
+      <div class="stat"><div class="stat-n">~21</div><div class="stat-l">Days</div></div>
+      <div class="stat"><div class="stat-n">5</div><div class="stat-l">Flights</div></div>
+      <div class="stat"><div class="stat-n">May</div><div class="stat-l">Best month</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Your Route</div>
+      <div class="map-box">
+        <div class="map-route">
+          <div class="map-stop"><div class="map-dot home"></div><div class="map-lbl">Vancouver</div></div>
+          <div class="map-dash"></div>
+          <div class="map-stop"><div class="map-dot"></div><div class="map-lbl">London</div></div>
+          <div class="map-dash"></div>
+          <div class="map-stop"><div class="map-dot"></div><div class="map-lbl">Lisbon</div></div>
+          <div class="map-dash"></div>
+          <div class="map-stop"><div class="map-dot"></div><div class="map-lbl">Brussels</div></div>
+          <div class="map-dash"></div>
+          <div class="map-stop"><div class="map-dot"></div><div class="map-lbl">Paris</div></div>
+          <div class="map-dash"></div>
+          <div class="map-stop"><div class="map-dot"></div><div class="map-lbl">Copenhagen</div></div>
+          <div class="map-dash"></div>
+          <div class="map-stop"><div class="map-dot home"></div><div class="map-lbl">Vancouver</div></div>
+        </div>
+        <p class="map-hint">Click each city tab above to explore highlights and tips</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Suggested Days Per City</div>
+      <div class="irow"><div class="irow-main">🇬🇧 London</div><div class="irow-detail">Gateway city, iconic sights, great food scene</div><div class="irow-val">3–4 days</div></div>
+      <div class="irow"><div class="irow-main">🇵🇹 Lisbon</div><div class="irow-detail">Warm, hilly, incredible food and wine</div><div class="irow-val">3–4 days</div></div>
+      <div class="irow"><div class="irow-main">🇧🇪 Brussels</div><div class="irow-detail">Compact, walkable, waffles and chocolate</div><div class="irow-val">2 days</div></div>
+      <div class="irow"><div class="irow-main">🇫🇷 Paris</div><div class="irow-detail">The classic — never enough time</div><div class="irow-val">3–4 days</div></div>
+      <div class="irow"><div class="irow-main">🇩🇰 Copenhagen</div><div class="irow-detail">Design, Scandi cool, world-class food</div><div class="irow-val">3 days</div></div>
+    </div>
+
+    <div class="tip">May is the absolute best month for this itinerary — warm weather across all cities, long golden evenings, and just before the peak summer crowds arrive. Paris French Open starts May 24!</div>
+  </div>
+
+  <!-- LONDON -->
+  <div class="panel" id="panel-london">
+    <div class="city-hero grad-london">
+      <div class="city-hero-inner">
+        <span class="city-emoji">🎡</span>
+        <h2>London</h2>
+        <p>United Kingdom · Days 1–4</p>
+        <span class="days-pill">3–4 days recommended</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Highlights</div>
+      <div class="hgrid">
+        <div class="hcard"><span class="hcard-icon">👑</span><h4>Tower of London</h4><p>Crown Jewels and 1,000 years of history. Book ahead — sells out fast.</p></div>
+        <div class="hcard"><span class="hcard-icon">🏰</span><h4>Buckingham Palace</h4><p>Changing of the Guard is free. Arrive early for a good spot.</p></div>
+        <div class="hcard"><span class="hcard-icon">🏛</span><h4>British Museum</h4><p>Free world-class museum. Rosetta Stone, Egyptian mummies, Greek treasures.</p></div>
+        <div class="hcard"><span class="hcard-icon">🍜</span><h4>Borough Market</h4><p>London's best food market near London Bridge. Open Thu–Sat.</p></div>
+        <div class="hcard"><span class="hcard-icon">🌸</span><h4>Notting Hill</h4><p>Colourful streets and Portobello Road Market. Best on Saturdays.</p></div>
+        <div class="hcard"><span class="hcard-icon">🎨</span><h4>Tate Modern</h4><p>Free contemporary art museum with stunning Thames views from the top.</p></div>
+        <div class="hcard"><span class="hcard-icon">🌳</span><h4>Hyde Park</h4><p>Massive royal park — perfect for a May afternoon picnic.</p></div>
+        <div class="hcard"><span class="hcard-icon">🎸</span><h4>Camden Market</h4><p>Eclectic street food, fashion, live music. Very lively on weekends.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Getting Around</div>
+      <div class="irow"><div class="irow-main">Oyster Card</div><div class="irow-detail">Tap-to-pay on all Tube, bus and rail</div><div class="irow-val">Essential</div></div>
+      <div class="irow"><div class="irow-main">Elizabeth Line</div><div class="irow-detail">Heathrow Airport to central London in 30 min</div><div class="irow-val">~£12</div></div>
+      <div class="irow"><div class="irow-main">Walking</div><div class="irow-detail">Central London very walkable between sights</div><div class="irow-val">Free</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Hotel Notes</div>
+      <div class="notes-grid">
+        <div class="notes-field"><label>Hotel Name</label><input type="text" placeholder="e.g. The Hoxton, Holborn" id="lon-hotel" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Confirmation #</label><input type="text" placeholder="e.g. HOX-2026-1234" id="lon-conf" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Check-in Date</label><input type="date" id="lon-date" oninput="saveNotes()"></div>
+      </div>
+    </div>
+    <div class="tip">Book Tower of London and popular restaurants well in advance — May is busy season in London.</div>
+  </div>
+
+  <!-- LISBON -->
+  <div class="panel" id="panel-lisbon">
+    <div class="city-hero grad-lisbon">
+      <div class="city-hero-inner">
+        <span class="city-emoji">🛺</span>
+        <h2>Lisbon</h2>
+        <p>Portugal · Days 5–8</p>
+        <span class="days-pill">3–4 days recommended</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Highlights</div>
+      <div class="hgrid">
+        <div class="hcard"><span class="hcard-icon">🏘</span><h4>Alfama District</h4><p>Oldest neighbourhood — fado music, cobblestone alleys, hilltop views.</p></div>
+        <div class="hcard"><span class="hcard-icon">🗼</span><h4>Belém Tower</h4><p>16th-century UNESCO fortress on the Tagus River. Book ahead.</p></div>
+        <div class="hcard"><span class="hcard-icon">⛪</span><h4>Jerónimos Monastery</h4><p>Stunning Manueline architecture. Houses Vasco da Gama's tomb.</p></div>
+        <div class="hcard"><span class="hcard-icon">🥐</span><h4>Pastéis de Belém</h4><p>The original custard tart bakery since 1837. Always worth the queue.</p></div>
+        <div class="hcard"><span class="hcard-icon">🌅</span><h4>Miradouros</h4><p>Scenic viewpoints. Senhora do Monte has the best sunset panorama.</p></div>
+        <div class="hcard"><span class="hcard-icon">🚃</span><h4>Tram 28</h4><p>Historic yellow tram through Alfama. Go early morning to beat crowds.</p></div>
+        <div class="hcard"><span class="hcard-icon">🛍</span><h4>LX Factory</h4><p>Industrial creative hub with great shops and Sunday market.</p></div>
+        <div class="hcard"><span class="hcard-icon">🍽</span><h4>Time Out Market</h4><p>Famous food hall — try 6–8 Portuguese dishes in one sitting.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Hotel Notes</div>
+      <div class="notes-grid">
+        <div class="notes-field"><label>Hotel Name</label><input type="text" placeholder="e.g. Bairro Alto Hotel" id="lis-hotel" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Confirmation #</label><input type="text" placeholder="Confirmation number" id="lis-conf" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Check-in Date</label><input type="date" id="lis-date" oninput="saveNotes()"></div>
+      </div>
+    </div>
+    <div class="tip">Lisbon is one of Europe's best value capitals. Excellent wine and food at a fraction of Paris prices. May weather is perfect — around 22°C with long sunny days.</div>
+  </div>
+
+  <!-- BRUSSELS -->
+  <div class="panel" id="panel-brussels">
+    <div class="city-hero grad-brussels">
+      <div class="city-hero-inner">
+        <span class="city-emoji">🧇</span>
+        <h2>Brussels</h2>
+        <p>Belgium · Days 9–10</p>
+        <span class="days-pill">2 days recommended</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Highlights</div>
+      <div class="hgrid">
+        <div class="hcard"><span class="hcard-icon">🏛</span><h4>Grand Place</h4><p>One of Europe's most beautiful squares. Magical at night with the lights.</p></div>
+        <div class="hcard"><span class="hcard-icon">👦</span><h4>Manneken Pis</h4><p>The famous tiny statue — smaller than expected but a Brussels institution.</p></div>
+        <div class="hcard"><span class="hcard-icon">🎨</span><h4>Magritte Museum</h4><p>Dedicated to Belgian surrealist René Magritte. Fantastic collection.</p></div>
+        <div class="hcard"><span class="hcard-icon">🧇</span><h4>Belgian Waffles</h4><p>Get a warm Liège waffle from a street vendor. Genuinely life-changing.</p></div>
+        <div class="hcard"><span class="hcard-icon">🍫</span><h4>Chocolate Shops</h4><p>Neuhaus, Godiva and dozens of artisan chocolatiers on every block.</p></div>
+        <div class="hcard"><span class="hcard-icon">☕</span><h4>Ixelles Neighbourhood</h4><p>Bohemian area with great cafes and Art Nouveau architecture.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Brussels → Paris by Train</div>
+      <div class="irow"><div class="irow-main">Eurostar / Thalys</div><div class="irow-detail">Brussels Midi → Paris Gare du Nord</div><div class="irow-val">1h 22m</div></div>
+      <div class="irow"><div class="irow-main">Frequency</div><div class="irow-detail">Multiple departures daily</div><div class="irow-val">~€50–100</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Hotel Notes</div>
+      <div class="notes-grid">
+        <div class="notes-field"><label>Hotel Name</label><input type="text" placeholder="e.g. Hotel Amigo" id="bru-hotel" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Confirmation #</label><input type="text" placeholder="Confirmation number" id="bru-conf" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Check-in Date</label><input type="date" id="bru-date" oninput="saveNotes()"></div>
+      </div>
+    </div>
+    <div class="tip">Always take the train from Brussels to Paris — faster than flying once you include airport time, and drops you right in the city centre.</div>
+  </div>
+
+  <!-- PARIS -->
+  <div class="panel" id="panel-paris">
+    <div class="city-hero grad-paris">
+      <div class="city-hero-inner">
+        <span class="city-emoji">🗼</span>
+        <h2>Paris</h2>
+        <p>France · Days 11–14</p>
+        <span class="days-pill">3–4 days recommended</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Highlights</div>
+      <div class="hgrid">
+        <div class="hcard"><span class="hcard-icon">✨</span><h4>Eiffel Tower</h4><p>Book summit tickets weeks ahead. Go at dusk then stay for the night sparkle show.</p></div>
+        <div class="hcard"><span class="hcard-icon">🖼</span><h4>The Louvre</h4><p>World's largest art museum. Pre-book — queues without tickets can be 2–3 hours.</p></div>
+        <div class="hcard"><span class="hcard-icon">🌸</span><h4>Musée d'Orsay</h4><p>Best Impressionist collection in the world. Monet, Renoir, Van Gogh.</p></div>
+        <div class="hcard"><span class="hcard-icon">⛪</span><h4>Notre Dame</h4><p>Newly reopened after renovation — more beautiful than ever. Go early.</p></div>
+        <div class="hcard"><span class="hcard-icon">🎨</span><h4>Montmartre</h4><p>Hilltop artist's quarter with Sacré-Cœur and stunning city views.</p></div>
+        <div class="hcard"><span class="hcard-icon">🛍</span><h4>Le Marais</h4><p>Trendy neighbourhood with galleries, boutiques and great cafes.</p></div>
+        <div class="hcard"><span class="hcard-icon">👑</span><h4>Palace of Versailles</h4><p>Day trip — 40 min by RER C. The Hall of Mirrors and gardens are extraordinary.</p></div>
+        <div class="hcard"><span class="hcard-icon">🎾</span><h4>French Open</h4><p>Roland Garros tennis starts May 24 — book if you're a fan!</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Hotel Notes</div>
+      <div class="notes-grid">
+        <div class="notes-field"><label>Hotel Name</label><input type="text" placeholder="e.g. Hôtel Le Marais" id="par-hotel" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Confirmation #</label><input type="text" placeholder="Confirmation number" id="par-conf" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Check-in Date</label><input type="date" id="par-date" oninput="saveNotes()"></div>
+      </div>
+    </div>
+    <div class="tip">Pre-book everything in Paris — Eiffel Tower, Louvre, and Musée d'Orsay all sell out weeks ahead in May. Centre Pompidou is closed for renovation 2026–2030.</div>
+  </div>
+
+  <!-- COPENHAGEN -->
+  <div class="panel" id="panel-copenhagen">
+    <div class="city-hero grad-copenhagen">
+      <div class="city-hero-inner">
+        <span class="city-emoji">🚲</span>
+        <h2>Copenhagen</h2>
+        <p>Denmark · Days 15–17</p>
+        <span class="days-pill">3 days recommended</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Highlights</div>
+      <div class="hgrid">
+        <div class="hcard"><span class="hcard-icon">🌈</span><h4>Nyhavn</h4><p>Iconic colourful harbour. Best enjoyed with a cold beer waterside.</p></div>
+        <div class="hcard"><span class="hcard-icon">🎡</span><h4>Tivoli Gardens</h4><p>Historic amusement park in the city. Magical when the evening lights come on.</p></div>
+        <div class="hcard"><span class="hcard-icon">🏰</span><h4>Rosenborg Castle</h4><p>Renaissance castle with Crown Jewels. Beautiful King's Garden surrounds it.</p></div>
+        <div class="hcard"><span class="hcard-icon">🧜</span><h4>The Little Mermaid</h4><p>Iconic but small — see it but manage your expectations.</p></div>
+        <div class="hcard"><span class="hcard-icon">🏘</span><h4>Freetown Christiania</h4><p>Unique self-governed neighbourhood since 1971. Unlike anywhere else.</p></div>
+        <div class="hcard"><span class="hcard-icon">🚲</span><h4>Cycling</h4><p>Rent a bike — Copenhagen is flat with excellent dedicated bike lanes.</p></div>
+        <div class="hcard"><span class="hcard-icon">🥪</span><h4>Smørrebrød</h4><p>Traditional open-faced sandwiches — must try for lunch at Aamanns.</p></div>
+        <div class="hcard"><span class="hcard-icon">👑</span><h4>Amalienborg Palace</h4><p>Royal residence. Changing of the guard at noon daily.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Hotel Notes</div>
+      <div class="notes-grid">
+        <div class="notes-field"><label>Hotel Name</label><input type="text" placeholder="e.g. Hotel d'Angleterre" id="cop-hotel" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Confirmation #</label><input type="text" placeholder="Confirmation number" id="cop-conf" oninput="saveNotes()"></div>
+        <div class="notes-field"><label>Check-in Date</label><input type="date" id="cop-date" oninput="saveNotes()"></div>
+      </div>
+    </div>
+    <div class="tip">Copenhagen is expensive — budget around €25–35 for a main course. But the food quality is extraordinary. Cycling is the cheapest and most enjoyable way to explore.</div>
+  </div>
+
+  <!-- FLIGHTS -->
+  <div class="panel" id="panel-flights">
+    <div class="city-hero grad-flights">
+      <div class="city-hero-inner">
+        <span class="city-emoji">✈️</span>
+        <h2>Flight Plan</h2>
+        <p>Recommended routes · May 2026</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Transatlantic — Vancouver to London</div>
+      <div class="irow"><div class="irow-main">YVR → LHR</div><div class="irow-detail">Air Canada, British Airways — direct ~9h 30m</div><div class="irow-val">~C$800–1,400</div></div>
+      <div class="irow"><div class="irow-main">Best airline</div><div class="irow-detail">Air Canada and British Airways have daily direct flights</div><div class="irow-val">Book now</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Intra-Europe Legs</div>
+      <div class="irow"><div class="irow-main">London → Lisbon</div><div class="irow-detail">TAP Air Portugal, British Airways — ~2h 30m</div><div class="irow-val">~€80–150</div></div>
+      <div class="irow"><div class="irow-main">Lisbon → Brussels</div><div class="irow-detail">Brussels Airlines, Vueling — ~2h 45m</div><div class="irow-val">~€70–130</div></div>
+      <div class="irow"><div class="irow-main">Brussels → Paris</div><div class="irow-detail">Eurostar TRAIN — Brussels Midi to Gare du Nord</div><div class="irow-val">1h 22m / ~€60</div></div>
+      <div class="irow"><div class="irow-main">Paris → Copenhagen</div><div class="irow-detail">SAS, Air France — ~2h 10m from CDG</div><div class="irow-val">~€80–150</div></div>
+      <div class="irow"><div class="irow-main">Copenhagen → Vancouver</div><div class="irow-detail">Via London or Amsterdam — ~12–14 hrs total</div><div class="irow-val">~C$800–1,200</div></div>
+    </div>
+    <div class="tip">Book your Vancouver–London flight first — May is peak season and prices rise quickly. Brussels to Paris is always faster and cheaper by Eurostar train.</div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="panel" id="panel-checklist">
+    <div class="city-hero grad-checklist">
+      <div class="city-hero-inner">
+        <span class="city-emoji">☑️</span>
+        <h2>Pre-Trip Checklist</h2>
+        <p>Tap each item as you complete it</p>
+      </div>
+    </div>
+
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-label">
+        <span>Overall progress</span>
+        <span id="progress-text">0 of 18 complete</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Flights to Book</div>
+      <ul class="clist">
+        <li><input type="checkbox" id="c1" onchange="saveChecks()"><span>Book Vancouver → London (YVR → LHR)</span></li>
+        <li><input type="checkbox" id="c2" onchange="saveChecks()"><span>Book London → Lisbon (LHR → LIS)</span></li>
+        <li><input type="checkbox" id="c3" onchange="saveChecks()"><span>Book Lisbon → Brussels (LIS → BRU)</span></li>
+        <li><input type="checkbox" id="c4" onchange="saveChecks()"><span>Book Eurostar Brussels → Paris train</span></li>
+        <li><input type="checkbox" id="c5" onchange="saveChecks()"><span>Book Paris → Copenhagen (CDG → CPH)</span></li>
+        <li><input type="checkbox" id="c6" onchange="saveChecks()"><span>Book Copenhagen → Vancouver return (CPH → YVR)</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Attractions to Pre-Book</div>
+      <ul class="clist">
+        <li><input type="checkbox" id="c7" onchange="saveChecks()"><span>Eiffel Tower summit tickets — Paris</span></li>
+        <li><input type="checkbox" id="c8" onchange="saveChecks()"><span>Louvre Museum tickets — Paris</span></li>
+        <li><input type="checkbox" id="c9" onchange="saveChecks()"><span>Tower of London tickets</span></li>
+        <li><input type="checkbox" id="c10" onchange="saveChecks()"><span>Palace of Versailles — day trip from Paris</span></li>
+        <li><input type="checkbox" id="c11" onchange="saveChecks()"><span>Jerónimos Monastery — Lisbon</span></li>
+        <li><input type="checkbox" id="c12" onchange="saveChecks()"><span>Tivoli Gardens evening — Copenhagen</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">Documents & Essentials</div>
+      <ul class="clist">
+        <li><input type="checkbox" id="c13" onchange="saveChecks()"><span>Check passport validity (6 months past return date)</span></li>
+        <li><input type="checkbox" id="c14" onchange="saveChecks()"><span>Get comprehensive travel insurance</span></li>
+        <li><input type="checkbox" id="c15" onchange="saveChecks()"><span>Notify bank and credit cards of travel dates</span></li>
+        <li><input type="checkbox" id="c16" onchange="saveChecks()"><span>Get European eSIM or international SIM card</span></li>
+        <li><input type="checkbox" id="c17" onchange="saveChecks()"><span>Download offline maps for all cities (Google Maps)</span></li>
+        <li><input type="checkbox" id="c18" onchange="saveChecks()"><span>Pack universal adapter — UK plug + EU plug</span></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Countdown
+function updateCountdown(){
+  var dep=new Date('2026-05-01');
+  var now=new Date();
+  var diff=Math.ceil((dep-now)/(1000*60*60*24));
+  var el=document.getElementById('days-left');
+  if(el) el.textContent=diff>0?diff:'🎉';
+}
+updateCountdown();
+
+// Panel switching
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Hotel notes
+var noteFields=['lon-hotel','lon-conf','lon-date','lis-hotel','lis-conf','lis-date',
+  'bru-hotel','bru-conf','bru-date','par-hotel','par-conf','par-date',
+  'cop-hotel','cop-conf','cop-date'];
+
+function saveNotes(){
+  var d={};
+  noteFields.forEach(function(f){
+    var el=document.getElementById(f);
+    if(el) d[f]=el.value;
+  });
+  try{localStorage.setItem('hotelNotes',JSON.stringify(d));}catch(e){}
+}
+
+// Checklist + progress bar
+function saveChecks(){
+  var d={};
+  var total=18,done=0;
+  for(var i=1;i<=total;i++){
+    var el=document.getElementById('c'+i);
+    if(el){d['c'+i]=el.checked;if(el.checked)done++;}
+  }
+  try{localStorage.setItem('checklist',JSON.stringify(d));}catch(e){}
+  updateProgress(done,total);
+}
+
+function updateProgress(done,total){
+  var pct=Math.round((done/total)*100);
+  var fill=document.getElementById('progress-fill');
+  var txt=document.getElementById('progress-text');
+  if(fill) fill.style.width=pct+'%';
+  if(txt) txt.textContent=done+' of '+total+' complete';
+}
+
+// Load saved data on startup
+function loadSaved(){
+  try{
+    var notes=localStorage.getItem('hotelNotes');
+    if(notes){
+      var d=JSON.parse(notes);
+      Object.keys(d).forEach(function(k){
+        var el=document.getElementById(k);
+        if(el) el.value=d[k];
+      });
+    }
+    var checks=localStorage.getItem('checklist');
+    var done=0;
+    if(checks){
+      var d=JSON.parse(checks);
+      Object.keys(d).forEach(function(k){
+        var el=document.getElementById(k);
+        if(el){el.checked=d[k];if(d[k])done++;}
+      });
+    }
+    updateProgress(done,18);
+  }catch(e){}
+}
+loadSaved();
+</script>
+</body>
+</html>
